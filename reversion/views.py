@@ -38,8 +38,7 @@ def create_revision(manage_manually=False, using=None, atomic=True, request_crea
 
                         # @override
                         # Set request path in the revision comment
-                        reversion.set_comment(request.get_absolute_url())
-                        # using
+                        reversion.set_comment(request.build_absolute_uri())
 
                         return response
                 except _RollBackRevisionView as ex:
