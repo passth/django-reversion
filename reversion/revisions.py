@@ -18,26 +18,33 @@ from reversion.signals import pre_revision_commit, post_revision_commit
 logger = logging.getLogger(__name__)
 
 
-_VersionOptions = namedtuple("VersionOptions", (
-    "fields",
-    "follow",
-    "format",
-    "for_concrete_model",
-    "ignore_duplicates",
-    "use_natural_foreign_keys",
-))
+_VersionOptions = namedtuple(
+    "VersionOptions",
+    (
+        "fields",
+        "follow",
+        "format",
+        "for_concrete_model",
+        "ignore_duplicates",
+        "use_natural_foreign_keys",
+    ),
+)
 
 
-_StackFrame = namedtuple("StackFrame", (
-    "manage_manually",
-    "user",
-    "comment",
-    "date_created",
-    "db_versions",
-    "meta",
-    # @override
-    "saves",
-))
+_StackFrame = namedtuple(
+    "StackFrame",
+    (
+        "manage_manually",
+        "user",
+        "comment",
+        "date_created",
+        "db_versions",
+        "meta",
+        # @override
+        "saves",
+        "using",
+    ),
+)
 
 
 _stack = ContextVar("reversion-stack", default=[])
@@ -80,6 +87,7 @@ def _push_frame(manage_manually, using):
             meta=(),
             # @override
             saves=defaultdict(set),
+            using=None,
         )
     _stack.set(_stack.get() + [stack_frame])
 
@@ -134,6 +142,14 @@ def set_date_created(date_created):
 
 def get_date_created():
     return _current_frame().date_created
+
+
+def set_using(using):
+    _update_frame(using=using)
+
+
+def get_using():
+    return _current_frame().using
 
 
 def add_meta(model, **values):

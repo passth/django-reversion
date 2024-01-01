@@ -34,6 +34,7 @@ else:
         is_registered,
         unregister,
         get_registered_models,
+        set_using,
     )
 
 __version__ = VERSION = (5, 0, 1)

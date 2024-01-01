@@ -63,6 +63,13 @@ class Revision(models.Model):
         help_text="A text comment on this revision.",
     )
 
+    using = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("using"),
+        help_text="The alias of the database used on this revision.",
+    )
+
     def get_comment(self):
         try:
             LogEntry = apps.get_model('admin.LogEntry')
