@@ -1,4 +1,4 @@
-# Generated manually lol
+# Generated manually
 
 from django.db import migrations
 
