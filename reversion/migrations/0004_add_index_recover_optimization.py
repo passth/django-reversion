@@ -13,11 +13,10 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunSQL(
             sql="""
-CREATE INDEX CONCURRENTLY IF NOT EXISTS "reversion_version_recover_optimization" ON
-"reversion_version" (content_type_id, db, object_id, id DESC);
+CREATE INDEX CONCURRENTLY IF NOT EXISTS "reversion_version_recover_optimization_id_desc" ON "reversion_version" (content_type_id, db, object_id, id DESC);
             """,
             reverse_sql="""
-DROP INDEX CONCURRENTLY IF EXISTS "reversion_version_recover_optimization";
+DROP INDEX CONCURRENTLY IF EXISTS "reversion_version_recover_optimization_id_desc";
 """,
             elidable=False,
         ),
